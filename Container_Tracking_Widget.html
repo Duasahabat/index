@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container Tracking Widget</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .widget {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .widget h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .widget label {
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .widget select,
+        .widget input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .widget button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .widget button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="widget">
+    <h2>Container Tracking</h2>
+    <label for="shipping-line">Select Shipping Line</label>
+    <select id="shipping-line">
+        <option value="wanhai">Wanhai</option>
+        <option value="one-line">One Line</option>
+        <option value="cma-cgm">CMA CGM</option>
+    </select>
+
+    <label for="container-number">Enter Container Number</label>
+    <input type="text" id="container-number" placeholder="e.g., WHLU1234567">
+
+    <button id="track-button">Track Container</button>
+</div>
+
+<script>
+    document.getElementById('track-button').addEventListener('click', function () {
+        const shippingLine = document.getElementById('shipping-line').value;
+        const containerNumber = document.getElementById('container-number').value.trim();
+
+        if (!containerNumber) {
+            alert('Please enter a valid container number.');
+            return;
+        }
+
+        let trackingUrl = '';
+
+        switch (shippingLine) {
+            case 'wanhai':
+                trackingUrl = `https://www.wanhai.com/apps/trackTrace.jsp?query=${containerNumber}`;
+                break;
+            case 'one-line':
+                trackingUrl = `https://www.one-line.com/en/standard-page/track-and-trace?container=${containerNumber}`;
+                break;
+            case 'cma-cgm':
+                trackingUrl = `https://www.cma-cgm.com/ebusiness/tracking?reference=${containerNumber}`;
+                break;
+            default:
+                alert('Invalid shipping line selected.');
+                return;
+        }
+
+        // Open the tracking page in a new tab
+        window.open(trackingUrl, '_blank');
+    });
+</script>
+
+</body>
+</html>
